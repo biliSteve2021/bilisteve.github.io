@@ -1,94 +1,204 @@
+<!--
+  你在干什么？你打开了开发者工具是想对我的网站干啥？？？我的这破网站有什么东西值得你打开开发者模式看看呢？这只是一个普普通通的个人网站啊，相信我，把你那开发者工具给关了吧，对你好，也对我好:)[doge]  ————妙狗国国王
+-->
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>我的个人资料</title>
+    <title>个人档案  - 搞笑假侠客</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+        :root {
+            --main-blue: #4a90e2;
+            --accent-yellow: #ffd700;
+            --bg-gray: #f0f4f9;
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            color: #333;
+            box-sizing: border-box;
+            cursor: none;
         }
-        .container {
-            width: 80%;
-            max-width: 1200px;
-            margin: auto;
-            overflow: hidden;
-            padding: 20px;
-            background: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
+
+        body {
+            background-color: var(--bg-gray);
+            font-family: 'Segoe UI', '游ゴシック', YuGothic, sans-serif;
+            overflow-x: hidden;
         }
-        header {
-            text-align: center;
-            padding: 20px 0;
-        }
-        header img {
-            width: 150px;
-            height: 150px;
+
+        /* 自定义鼠标样式 */
+        .cursor-dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--main-blue);
             border-radius: 50%;
-            object-fit: cover;
+            position: fixed;
+            pointer-events: none;
+            mix-blend-mode: difference;
+            transition: transform 0.2s;
+            z-index: 999;
         }
-        h1, h2 {
-            color: #4a4a4a;
+
+        .cursor-trail {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background-color: rgba(74, 144, 226, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: trail 0.6s linear forwards;
         }
-        .info {
+
+        @keyframes trail {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(0.1); opacity: 0; }
+        }
+
+        /* 导航栏 */
+        .nav-bar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-links {
             display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: flex-end;
         }
-        .info div {
-            flex: 1;
-            margin: 10px;
-            padding: 10px;
-            background: #eef7ff;
-            border-radius: 5px;
+
+        .nav-link {
+            color: var(--main-blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
         }
-        footer {
+
+        .nav-link:hover {
+            color: var(--accent-yellow);
+            transform: translateY(-2px);
+        }
+
+        /* 主内容区 */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: linear-gradient(45deg, #e3f2fd, #f0f4f9);
+        }
+
+        .title-text {
+            font-size: 4rem;
+            background: linear-gradient(135deg, var(--main-blue), #6ab0ff);
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            animation: titleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .status-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             text-align: center;
-            padding: 10px 0;
-            background: #ddd;
-            margin-top: 20px;
+        }
+
+        .status-item {
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-icon {
+            color: var(--accent-yellow);
+            font-size: 1.5rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .title-text { font-size: 2.5rem; }
+            .nav-bar { padding: 1rem; }
+            .nav-links { gap: 1rem; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <img src="1.jpg" alt="本人头像">
-            <h1>搞笑假侠客</h1>
-            <p>一个up主 丨 江苏</p>
-        </header>
+    <!-- 自定义鼠标元素 -->
+    <div class="cursor-dot"></div>
 
-        <section class="info">
-            <div>
-                <h2>联系方式</h2>
-                <p>Email: h124062@gmail.com</p>
-                <p>qq:2138464632</p>
-            </div>
-            <div>
-                <h2>现玩游戏</h2>
-                <ul>
-                    <li>Blue archive</li>
-                    <li>minecraft</li>
-                    <li>phigros</li>
-                </ul>
-            </div>
-            <div>
-                <h2>所在平台</h2>
-                <p>bilibili</p>
-            </div>
-            <div>
-                <h2>板权声明</h2>
-                <p>本人视频仅在bilibili发，切勿盗取</p>
+    <!-- 导航栏 -->
+    <nav class="nav-bar">
+        <div class="nav-links">
+            <a href="#" class="nav-link">档案首页</a>
+            <a href="server.html" class="nav-link">玩过的服</a>
+            <a href="404.html" class="nav-link">所在游戏</a>
+            <a href="404.html" class="nav-link">联络方式</a>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main>
+        <section class="hero-section">
+            <h1 class="title-text">搞笑假侠客的个人网站</h1>
+            <div class="status-box">
+                <div class="status-item">
+                    <i class="fas fa-shield-alt status-icon"></i>
+                    <span>当前分区：游戏/科技</span>
+                </div>
+                <div class="status-item">
+                    <i class="fas fa-bolt status-icon"></i>
+                    <span>声明：框架由ai生成</span>
+                </div>
             </div>
         </section>
+    </main>
 
-        <footer>
-            <p>&copy; 2024 搞笑假侠客. 版权所有。该网页框架使用AI生成</p>
-        </footer>
-    </div>
+    <script>
+        // 自定义鼠标效果
+        const cursorDot = document.querySelector('.cursor-dot');
+        let trailDelay = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            // 主光标跟随
+            cursorDot.style.left = `${e.clientX}px`;
+            cursorDot.style.top = `${e.clientY}px`;
+
+            // 创建拖尾粒子
+            if (trailDelay % 3 === 0) {
+                const trail = document.createElement('div');
+                trail.className = 'cursor-trail';
+                trail.style.left = `${e.clientX}px`;
+                trail.style.top = `${e.clientY}px`;
+                document.body.appendChild(trail);
+                
+                setTimeout(() => trail.remove(), 600);
+            }
+            trailDelay++;
+        });
+
+        // 悬停效果
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorDot.style.transform = 'scale(2)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorDot.style.transform = 'scale(1)';
+            });
+        });
+    </script>
 </body>
 </html>
