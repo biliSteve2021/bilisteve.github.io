@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我 | 个人主页</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- AOS 动画库 -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        dark: '#1F2937',
+                        bilibili: '#FB7299' // 新增B站品牌色
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 背景切换过渡 */
+        body {transition: background-image 1s ease-in-out;}
+        /* 桌面端/移动端背景图（和主页保持一致） */
+        .desktop-bg{background-image:url('background/-ivealive.png');}
+        .mobile-bg{background-image:url('background/03.png');}
+        .contact-card{transition:all 0.3s ease;}
+        .contact-card:hover{transform:translateY(-5px);box-shadow:0 20px 25px -5px rgba(0,0,0,0.2);}
+        /* 背景渐变遮罩 */
+        .bg-gradient-overlay{background:linear-gradient(to bottom,rgba(0,0,0,0.2),rgba(0,0,0,0.7));}
+        /* 联系方式项 hover 效果 */
+        .contact-item:hover {
+            transform: scale(1.05);
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-cover bg-center bg-fixed min-h-screen flex items-center justify-center p-4">
+    <div class="fixed inset-0 bg-gradient-overlay z-0"></div>
+
+    <!-- 侧边栏（核心修改：删除联系方式栏，关于我改联系我并高亮） -->
+    <div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white/90 backdrop-blur shadow-lg -translate-x-full transition-all duration-300 z-40">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <!-- 侧边栏头像 -->
+                <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary">
+                    <img src="avatar/avatar.jpg" alt="侧边栏头像" class="w-full h-full object-cover">
+                </div>
+                <button id="closeSidebar" class="text-gray-500 text-xl"><i class="fa fa-times"></i></button>
+            </div>
+            <nav>
+                <ul class="space-y-4">
+                    <li><a href="index.html" class="sidebar-link flex items-center p-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white"><i class="fa fa-home w-6"></i><span>首页</span></a></li>
+                    <!-- 核心修改1：关于我 → 联系我，且设置为当前高亮项 -->
+                    <li><a href="contact.html" class="sidebar-link flex items-center p-3 rounded-lg bg-primary text-white"><i class="fa fa-user w-6"></i><span>联系我</span></a></li>
+                    <li><a href="zp.html" class="sidebar-link flex items-center p-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white"><i class="fa fa-folder w-6"></i><span>作品集</span></a></li>
+                    <li><a href="skill.html" class="sidebar-link flex items-center p-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white"><i class="fa fa-code w-6"></i><span>技能</span></a></li>
+                    <li><a href="#blog" class="sidebar-link flex items-center p-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white"><i class="fa fa-pencil w-6"></i><span>博客【暂无】</span></a></li>
+                    <!-- 核心修改2：删除原有的「联系方式」选项 -->
+                </ul>
+            </nav>
+        </div>
+    </div>
+    
+    <!-- 侧边栏遮罩 -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-30 hidden"></div>
+    
+    <!-- 菜单按钮 -->
+    <button id="menuBtn" class="fixed top-4 left-4 z-50 w-12 h-12 rounded-full bg-white/90 shadow-lg flex items-center justify-center text-gray-700">
+        <i class="fa fa-bars text-xl"></i>
+    </button>
+
+    <!-- 联系方式主卡片（标题同步改为「联系我」） -->
+    <div class="relative z-10 w-full max-w-md">
+        <div class="contact-card bg-white/90 backdrop-blur rounded-2xl shadow-xl overflow-hidden p-8" data-aos="fade-up">
+            <!-- 页面标题：联系方式 → 联系我 -->
+            <div class="text-center mb-10">
+                <h1 class="text-3xl font-bold text-dark mb-2">联系我</h1>
+                <p class="text-gray-600">欢迎通过以下方式联系我</p>
+                <div class="w-20 h-1 bg-primary mx-auto my-4 rounded-full"></div>
+            </div>
+
+            <!-- 联系方式列表（内容不变） -->
+            <div class="space-y-6">
+                <!-- QQ 联系方式 -->
+                <div class="contact-item flex items-center p-4 rounded-xl border border-gray-100 transition-all duration-300" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mr-5">
+                        <i class="fa fa-qq text-2xl text-primary"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg text-dark">QQ</h3>
+                        <p class="text-gray-600 mt-1">2138464632</p>
+                        <p class="text-xs text-gray-400 mt-1">可直接添加好友，备注：来自个人主页</p>
+                    </div>
+                </div>
+
+                <!-- 邮箱 联系方式 -->
+                <div class="contact-item flex items-center p-4 rounded-xl border border-gray-100 transition-all duration-300" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mr-5">
+                        <i class="fa fa-envelope text-2xl text-primary"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg text-dark">邮箱</h3>
+                        <p class="text-gray-600 mt-1">2138464632@qq.com或gaixiake2024@outlook.com</p>
+                        <p class="text-xs text-gray-400 mt-1">你也可以通过邮箱联系我</p>
+                    </div>
+                </div>
+
+                <!-- B站 联系方式 -->
+                <div class="contact-item flex items-center p-4 rounded-xl border border-gray-100 transition-all duration-300" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-14 h-14 rounded-full bg-bilibili/10 flex items-center justify-center mr-5">
+                        <i class="fa fa-play-circle text-2xl text-bilibili"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-lg text-dark">哔哩哔哩</h3>
+                        <p class="text-gray-600 mt-1">B站昵称：蔚蓝侠客</p>
+                        <p class="text-xs text-gray-400 mt-1">不定期更新视频，点点关注不迷路~</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 底部提示 -->
+            <div class="mt-10 text-center text-gray-500 text-sm">
+                <p>💬 如想与我交流，你可以使用任意一个方式来联系</p>
+                <p class="mt-2">© 2026 蔚蓝侠客 保留所有权利。</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 初始化AOS动画
+        AOS.init({
+            once: false,
+            duration: 800,
+            easing: 'ease-in-out'
+        });
+
+        // 2. 背景切换逻辑
+        function setBackground(){
+            const body = document.body;
+            body.classList.remove('desktop-bg', 'mobile-bg');
+            if (window.innerWidth >= 768) {
+                body.classList.add('desktop-bg');
+            } else {
+                body.classList.add('mobile-bg');
+            }
+            AOS.refresh();
+        }
+        setBackground();
+
+        // 3. 窗口resize防抖
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                setBackground();
+                AOS.refreshHard();
+            }, 100);
+        });
+
+        // 4. 侧边栏交互逻辑
+        const sidebar = document.getElementById('sidebar'),
+              overlay = document.getElementById('sidebarOverlay'),
+              menuBtn = document.getElementById('menuBtn'),
+              closeBtn = document.getElementById('closeSidebar'),
+              links = document.querySelectorAll('.sidebar-link');
+
+        function openSide(){
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+            menuBtn.classList.add('hidden');
+        }
+        function closeSide(){
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+            menuBtn.classList.remove('hidden');
+        }
+        menuBtn.onclick = openSide;
+        closeBtn.onclick = closeSide;
+        overlay.onclick = closeSide;
+        links.forEach(item => item.onclick = closeSide);
+        document.onkeydown = e => e.key === 'Escape' && closeSide();
+    </script>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创作技能 | 个人主页</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- AOS 动画库 -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        dark: '#1F2937',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 背景切换过渡 */
+        body {transition: background-image 1s ease-in-out;}
+        /* 桌面端/移动端背景图 */
+        .desktop-bg{background-image:url('background/-ivealive.png');}
+        .mobile-bg{background-image:url('background/03.png');}
+        /* 卡片悬浮效果 */
+        .profile-card{transition:all 0.3s ease;}
+        .profile-card:hover{transform:translateY(-5px);box-shadow:0 20px 25px -5px rgba(0,0,0,0.2);}
+        /* 背景渐变遮罩 */
+        .bg-gradient-overlay{background:linear-gradient(to bottom,rgba(0,0,0,0.2),rgba(0,0,0,0.7));}
+        /* 头像图片适配 */
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        /* 技能进度条样式 */
+        .skill-bar {
+            height: 6px;
+            border-radius: 99px;
+            background: rgba(59, 130, 246, 0.2);
+            overflow: hidden;
+        }
+        .skill-progress {
+            height: 100%;
+            background: #3B82F6;
+            border-radius: 99px;
+            transition: width 1s ease;
+        }
+    </style>
+</head>
+<body class="bg-cover bg-center bg-fixed min-h-screen p-4 flex items-center justify-center">
+    <div class="fixed inset-0 bg-gradient-overlay z-0"></div>
+
+    <!-- 侧边栏 -->
+    <div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white/90 backdrop-blur shadow-lg -translate-x-full transition-all duration-300 z-40">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary">
+                    <img src="avatar/avatar.jpg" alt="侧边栏头像" class="avatar-img">
+                </div>
+                <button id="closeSidebar" class="text-gray-500 text-xl"><i class="fa fa-times"></i></button>
+            </div>
+            <nav>
+                <ul class="space-y-4">
+                    <li><a href="index.html" class="sidebar-link flex items-center p-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white"><i class="fa fa-home w-6"></i><span>首页</span></a></li>
+                    <li><a href="contact.html" class="sidebar-link flex items-center p-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white"><i class="fa fa-user w-6"></i><span>联系我</span></a></li>
+                    <li><a href="zp.html" class="sidebar-link flex items-center p-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white"><i class="fa fa-folder w-6"></i><span>作品集</span></a></li>
+                    <li><a href="skills.html" class="sidebar-link flex items-center p-3 rounded-lg bg-primary text-white"><i class="fa fa-code w-6"></i><span>技能</span></a></li>
+                    <li><a href="#blog" class="sidebar-link flex items-center p-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white"><i class="fa fa-pencil w-6"></i><span>博客【暂无】</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    
+    <!-- 侧边栏遮罩 -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-30 hidden opacity-0 transition-opacity duration-300"></div>
+    
+    <!-- 菜单按钮 -->
+    <button id="menuBtn" class="fixed top-4 left-4 z-50 w-12 h-12 rounded-full bg-white/90 shadow-lg flex items-center justify-center text-gray-700 focus:outline-none">
+        <i class="fa fa-bars text-xl"></i>
+    </button>
+
+    <!-- 创作技能主体内容 -->
+    <div class="relative z-10 w-full max-w-6xl mx-auto px-4 py-8">
+        <!-- 页面标题 -->
+        <div class="text-center mb-12" data-aos="fade-down">
+            <h2 class="text-[clamp(1.8rem,4vw,2.8rem)] font-bold text-white drop-shadow-lg">我的创作技能</h2>
+            <p class="text-gray-200 mt-3">游戏二创 | 视频制作 | 音频处理 | 内容创作</p>
+            <div class="w-24 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
+        </div>
+
+        <!-- 技能分类卡片网格 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            <!-- 1. 游戏二创技能 -->
+            <div class="profile-card bg-white/90 backdrop-blur rounded-2xl shadow-xl p-6" data-aos="fade-up">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                        <i class="fa fa-book text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark">游戏二创创作</h3>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">蔚蓝档案剧情解析、同人剧情、服区内容对比、游戏解说</p>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>剧情创作</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width:90%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>游戏解说</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width:85%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 音游实况技能 -->
+            <div class="profile-card bg-white/90 backdrop-blur rounded-2xl shadow-xl p-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                        <i class="fa fa-music text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark">音游实况制作</h3>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">Phigros实况录制、魔王曲演示、音游闯关视频</p>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>实况录制</span>
+                            <span>95%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width:95%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>画面剪辑</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width:88%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 视频剪辑技能 -->
+            <div class="profile-card bg-white/90 backdrop-blur rounded-2xl shadow-xl p-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                        <i class="fa fa-film text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark">视频剪辑制作</h3>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">短视频剪辑、特效处理、转场制作、画面调色</p>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>剪辑合成</span>
+                            <span>92%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width:92%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>特效制作</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width:80%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 音频处理技能 -->
+            <div class="profile-card bg-white/90 backdrop-blur rounded-2xl shadow-xl p-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                        <i class="fa fa-volume-up text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark">音频可视化</h3>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">BGM可视化、音频剪辑、动态音效、音乐处理</p>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>可视化制作</span>
+                            <span>86%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width:86%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>音频处理</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width:90%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 脚本创作技能 -->
+            <div class="profile-card bg-white/90 backdrop-blur rounded-2xl shadow-xl p-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                        <i class="fa fa-pencil text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark">剧情脚本创作</h3>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">原创短篇剧情、系列故事、视频文案、内容策划</p>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>脚本编写</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width:85%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>内容策划</span>
+                            <span>82%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width:82%"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. 休闲游戏创作 -->
+            <div class="profile-card bg-white/90 backdrop-blur rounded-2xl shadow-xl p-6" data-aos="fade-up" data-aos-delay="500">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
+                        <i class="fa fa-gamepad text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark">休闲游戏创作</h3>
+                </div>
+                <p class="text-gray-600 text-sm mb-4">蛋仔派对实况、整活视频、小游戏录制、趣味内容</p>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>游戏录制</span>
+                            <span>90%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width:90%"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span>整活创作</span>
+                            <span>88%</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-progress" style="width:88%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 技能总览卡片 -->
+        <div class="profile-card bg-white/90 backdrop-blur rounded-2xl shadow-xl p-8 mt-10 text-center" data-aos="fade-up">
+            <h3 class="text-xl font-bold text-dark mb-4">创作能力总览</h3>
+            <div class="flex flex-wrap justify-center gap-6 text-gray-700">
+                <div><p class="text-2xl font-bold text-primary">95%</p><p class="text-sm">视频制作</p></div>
+                <div><p class="text-2xl font-bold text-primary">90%</p><p class="text-sm">内容创作</p></div>
+                <div><p class="text-2xl font-bold text-primary">88%</p><p class="text-sm">音频处理</p></div>
+                <div><p class="text-2xl font-bold text-primary">85%</p><p class="text-sm">脚本策划</p></div>
+            </div>
+            <p class="mt-5 text-gray-600 text-sm">创作理念：用心做好每一个视频，用热爱记录游戏与生活</p>
+        </div>
+    </div>
+
+    <script>
+        // 1. 初始化AOS动画
+        AOS.init({
+            once: false,
+            duration: 800,
+            easing: 'ease-in-out'
+        });
+
+        // 2. 背景切换逻辑
+        function setBackground(){
+            const body = document.body;
+            body.classList.remove('desktop-bg', 'mobile-bg');
+            if (window.innerWidth >= 768) {
+                body.classList.add('desktop-bg');
+            } else {
+                body.classList.add('mobile-bg');
+            }
+            AOS.refresh();
+        }
+        setBackground();
+
+        // 3. 窗口resize防抖
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                setBackground();
+                AOS.refreshHard();
+            }, 100);
+        });
+
+        // 4. 侧边栏交互（跳转已修复）
+        const sidebar = document.getElementById('sidebar'),
+              overlay = document.getElementById('sidebarOverlay'),
+              menuBtn = document.getElementById('menuBtn'),
+              closeBtn = document.getElementById('closeSidebar'),
+              links = document.querySelectorAll('.sidebar-link');
+
+        function openSide(){
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+            setTimeout(() => {
+                overlay.classList.add('opacity-100');
+            }, 10);
+            menuBtn.classList.add('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeSide(){
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.remove('opacity-100');
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                menuBtn.classList.remove('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }, 300);
+        }
+        
+        // 事件绑定
+        menuBtn.addEventListener('click', openSide);
+        closeBtn.addEventListener('click', closeSide);
+        overlay.addEventListener('click', closeSide);
+        
+        // 修复跳转：页面链接正常跳转，锚点关闭侧边栏
+        links.forEach(item => {
+            item.addEventListener('click', function(e) {
+                const target = this.getAttribute('href');
+                if(target.startsWith('#')) {
+                    e.preventDefault();
+                    closeSide();
+                } else {
+                    closeSide();
+                    setTimeout(() => {
+                        window.location.href = target;
+                    }, 300);
+                }
+            });
+        });
+        
+        // ESC关闭侧边栏
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && !sidebar.classList.contains('-translate-x-full')) {
+                closeSide();
+            }
+        });
+    </script>
+</body>
+</html>

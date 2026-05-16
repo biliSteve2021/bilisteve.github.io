@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的作品集</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- AOS 动画库 -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        dark: '#1F2937',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 背景切换过渡 */
+        body {transition: background-image 1s ease-in-out;}
+        /* 桌面端/移动端背景图（保留路径，需确保本地文件存在） */
+        .desktop-bg{background-image:url('background/-ivealive.png');}
+        .mobile-bg{background-image:url('background/03.png');}
+        /* 卡片悬浮效果 */
+        .profile-card{transition:all 0.3s ease;}
+        .profile-card:hover{transform:translateY(-5px);box-shadow:0 20px 25px -5px rgba(0,0,0,0.2);}
+        /* 背景渐变遮罩 */
+        .bg-gradient-overlay{background:linear-gradient(to bottom,rgba(0,0,0,0.2),rgba(0,0,0,0.7));}
+        /* 头像图片适配 */
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+    </style>
+</head>
+<body class="bg-cover bg-center bg-fixed min-h-screen p-4 flex items-center justify-center">
+    <div class="fixed inset-0 bg-gradient-overlay z-0"></div>
+
+    <!-- 侧边栏 -->
+    <div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white/90 backdrop-blur shadow-lg -translate-x-full transition-all duration-300 z-40">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary">
+                    <img src="avatar/avatar.jpg" alt="侧边栏头像" class="avatar-img">
+                </div>
+                <button id="closeSidebar" class="text-gray-500 text-xl"><i class="fa fa-times"></i></button>
+            </div>
+            <nav>
+                <ul class="space-y-4">
+                    <li><a href="index.html" class="sidebar-link flex items-center p-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white"><i class="fa fa-home w-6"></i><span>首页</span></a></li>
+                    <li><a href="contact.html" class="sidebar-link flex items-center p-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white"><i class="fa fa-user w-6"></i><span>联系我</span></a></li>
+                    <li><a href="zp.html" class="sidebar-link flex items-center p-3 rounded-lg bg-primary text-white"><i class="fa fa-folder w-6"></i><span>作品集</span></a></li>
+                    <li><a href="skill.html" class="sidebar-link flex items-center p-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white"><i class="fa fa-code w-6"></i><span>技能</span></a></li>
+                    <li><a href="#blog" class="sidebar-link flex items-center p-3 rounded-lg text-gray-700 hover:bg-primary hover:text-white"><i class="fa fa-pencil w-6"></i><span>博客【暂无】</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    
+    <!-- 侧边栏遮罩 -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-30 hidden opacity-0 transition-opacity duration-300"></div>
+    
+    <!-- 菜单按钮 -->
+    <button id="menuBtn" class="fixed top-4 left-4 z-50 w-12 h-12 rounded-full bg-white/90 shadow-lg flex items-center justify-center text-gray-700 focus:outline-none">
+        <i class="fa fa-bars text-xl"></i>
+    </button>
+
+    <!-- 作品集主体内容 -->
+    <div class="relative z-10 w-full max-w-6xl mx-auto px-4 py-8">
+        <!-- 页面标题 -->
+        <div class="text-center mb-12" data-aos="fade-down">
+            <h2 class="text-[clamp(1.8rem,4vw,2.8rem)] font-bold text-white drop-shadow-lg">我的作品合集</h2>
+            <p class="text-gray-200 mt-3">游戏二创 | 音游实况 | 原创短篇 | 趣味日常</p>
+            <div class="w-24 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
+        </div>
+
+        <!-- 作品分类卡片网格 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+            <!-- 1.蔚蓝档案专区 -->
+            <div class="profile-card bg-white/90 backdrop-blur rounded-2xl shadow-xl p-6" data-aos="fade-up">
+                <div class="text-center">
+                    <i class="fa fa-book text-4xl text-primary mb-4"></i>
+                    <h3 class="text-xl font-bold text-dark mb-2">蔚蓝档案专区</h3>
+                    <p class="text-gray-600 text-sm mb-4">剧情解析、BGM可视化、服区内容对比、同人原创剧情</p>
+                    <span class="inline-block bg-blue-100 text-primary px-3 py-1 rounded-full text-xs">热门创作</span>
+                </div>
+            </div>
+
+            <!-- 2.音游实况专区 -->
+            <div class="profile-card bg-white/90 backdrop-blur rounded-2xl shadow-xl p-6" data-aos="fade-up" data-aos-delay="100">
+                <div class="text-center">
+                    <i class="fa fa-music text-4xl text-primary mb-4"></i>
+                    <h3 class="text-xl font-bold text-dark mb-2">音游游玩实录</h3>
+                    <p class="text-gray-600 text-sm mb-4">Phigros萌新日常、魔王曲速通、音游闯关视频</p>
+                    <span class="inline-block bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-xs">休闲向</span>
+                </div>
+            </div>
+
+            <!-- 3.休闲游戏合集 -->
+            <div class="profile-card bg-white/90 backdrop-blur rounded-2xl shadow-xl p-6" data-aos="fade-up" data-aos-delay="200">
+                <div class="text-center">
+                    <i class="fa fa-gamepad text-4xl text-primary mb-4"></i>
+                    <h3 class="text-xl font-bold text-dark mb-2">休闲游戏日常</h3>
+                    <p class="text-gray-600 text-sm mb-4">蛋仔派对游玩、小游戏速通、失误死亡合集</p>
+                    <span class="inline-block bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs">趣味整活</span>
+                </div>
+            </div>
+
+            <!-- 4.原创剧情系列 -->
+            <div class="profile-card bg-white/90 backdrop-blur rounded-2xl shadow-xl p-6" data-aos="fade-up" data-aos-delay="300">
+                <div class="text-center">
+                    <i class="fa fa-film text-4xl text-primary mb-4"></i>
+                    <h3 class="text-xl font-bold text-dark mb-2">原创连载剧情</h3>
+                    <p class="text-gray-600 text-sm mb-4">彁劫持系列、未知系列等自制短篇故事企划</p>
+                    <span class="inline-block bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs">原创自制</span>
+                </div>
+            </div>
+
+            <!-- 5.音频可视化 -->
+            <div class="profile-card bg-white/90 backdrop-blur rounded-2xl shadow-xl p-6" data-aos="fade-up" data-aos-delay="400">
+                <div class="text-center">
+                    <i class="fa fa-volume-up text-4xl text-primary mb-4"></i>
+                    <h3 class="text-xl font-bold text-dark mb-2">音频可视化制作</h3>
+                    <p class="text-gray-600 text-sm mb-4">游戏活动BGM剪辑、音乐动态可视化短视频</p>
+                    <span class="inline-block bg-yellow-100 text-yellow-600 px-3 py-1 rounded-full text-xs">剪辑创作</span>
+                </div>
+            </div>
+
+            <!-- 6.生活趣味杂谈 -->
+            <div class="profile-card bg-white/90 backdrop-blur rounded-2xl shadow-xl p-6" data-aos="fade-up" data-aos-delay="500">
+                <div class="text-center">
+                    <i class="fa fa-camera text-4xl text-primary mb-4"></i>
+                    <h3 class="text-xl font-bold text-dark mb-2">日常趣味作品</h3>
+                    <p class="text-gray-600 text-sm mb-4">个人随拍、网络热梗吐槽、简短趣味短视频</p>
+                    <span class="inline-block bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs">生活记录</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 账号数据底部卡片 -->
+        <div class="profile-card bg-white/90 backdrop-blur rounded-2xl shadow-xl p-8 mt-10 text-center" data-aos="fade-up">
+            <h3 class="text-xl font-bold text-dark mb-4">账号创作数据</h3>
+            <div class="flex flex-wrap justify-center gap-4 md:gap-8 text-gray-700">
+                <div><p class="text-2xl font-bold text-primary">94</p><p class="text-sm">投稿视频</p></div>
+                <div><p class="text-2xl font-bold text-primary">6</p><p class="text-sm">合集系列</p></div>
+                <div><p class="text-2xl font-bold text-primary">2.9万</p><p class="text-sm">总播放量</p></div>
+                <div><p class="text-2xl font-bold text-primary">609</p><p class="text-sm">总获赞数</p></div>
+            </div>
+            <p class="mt-5 text-gray-600 text-sm">创作宗旨：以爱好为主，随心更新，记录游戏与生活日常</p>
+        </div>
+    </div>
+
+    <script>
+        // 1. 初始化AOS动画
+        AOS.init({
+            once: false,
+            duration: 800,
+            easing: 'ease-in-out'
+        });
+
+        // 2. 背景切换逻辑
+        function setBackground(){
+            const body = document.body;
+            body.classList.remove('desktop-bg', 'mobile-bg');
+            if (window.innerWidth >= 768) {
+                body.classList.add('desktop-bg');
+            } else {
+                body.classList.add('mobile-bg');
+            }
+            AOS.refresh();
+        }
+        setBackground();
+
+        // 3. 窗口resize防抖
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                setBackground();
+                AOS.refreshHard();
+            }, 100);
+        });
+
+        // 4. 侧边栏交互逻辑（核心修复跳转问题）
+        const sidebar = document.getElementById('sidebar'),
+              overlay = document.getElementById('sidebarOverlay'),
+              menuBtn = document.getElementById('menuBtn'),
+              closeBtn = document.getElementById('closeSidebar'),
+              links = document.querySelectorAll('.sidebar-link');
+
+        function openSide(){
+            sidebar.classList.remove('-translate-x-full');
+            overlay.classList.remove('hidden');
+            setTimeout(() => {
+                overlay.classList.add('opacity-100');
+            }, 10);
+            menuBtn.classList.add('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeSide(){
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.remove('opacity-100');
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+                menuBtn.classList.remove('hidden');
+                document.body.classList.remove('overflow-hidden');
+            }, 300);
+        }
+        
+        // 绑定基础事件
+        menuBtn.addEventListener('click', openSide);
+        closeBtn.addEventListener('click', closeSide);
+        overlay.addEventListener('click', closeSide);
+        
+        // 核心修复：区分链接类型，仅阻止锚点跳转，允许页面跳转
+        links.forEach(item => {
+            item.addEventListener('click', function(e) {
+                const targetHref = this.getAttribute('href');
+                
+                // 1. 如果是锚点链接（以#开头），阻止默认跳转（避免页面滚动）
+                if (targetHref && targetHref.startsWith('#')) {
+                    e.preventDefault();
+                    closeSide();
+                    console.log('锚点链接，暂未实现跳转:', targetHref);
+                } 
+                // 2. 如果是页面链接（如index.html/contact.html），先关闭侧边栏再允许跳转
+                else if (targetHref && targetHref !== '#') {
+                    closeSide();
+                    // 延迟跳转，确保侧边栏动画完成（体验更流畅）
+                    setTimeout(() => {
+                        window.location.href = targetHref;
+                    }, 300);
+                }
+            });
+        });
+        
+        // ESC键关闭侧边栏
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && !sidebar.classList.contains('-translate-x-full')) {
+                closeSide();
+            }
+        });
+    </script>
+</body>
+</html>
