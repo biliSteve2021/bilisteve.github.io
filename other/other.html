@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI翻译对比展示</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-50 to-pink-50 min-h-screen">
+    <!-- 头部 -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <h1 class="text-2xl font-bold text-slate-800">AI 翻译效果对比展示</h1>
+            <p class="text-slate-500 text-sm mt-1">「最新AI搭載モデル！」多平台翻译结果对照</p>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="max-w-7xl mx-auto px-6 py-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- 图片 1 -->
+            <div class="card-hover bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer" onclick="openLightbox(this.querySelector('img').src)">
+                <div class="px-5 py-3 bg-slate-50 border-b border-slate-100">
+                    <span class="text-sm font-medium text-slate-700">图 1 · kimi加qq翻译对比</span>
+                </div>
+                <div class="p-2">
+                    <img src="QQ20260620-193000.png" 
+                         alt="kimi加qq翻译对比" 
+                         class="w-full h-auto rounded-lg">
+                </div>
+            </div>
+
+            <!-- 图片 2 -->
+            <div class="card-hover bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer" onclick="openLightbox(this.querySelector('img').src)">
+                <div class="px-5 py-3 bg-slate-50 border-b border-slate-100">
+                    <span class="text-sm font-medium text-slate-700">图 2 · DeepSeek加豆包翻译对比其一</span>
+                </div>
+                <div class="p-2">
+                    <img src="QQ20260620-193121.png" 
+                         alt="DeepSeek加豆包翻译对比其一" 
+                         class="w-full h-auto rounded-lg">
+                </div>
+            </div>
+
+            <!-- 图片 3 -->
+            <div class="card-hover bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer" onclick="openLightbox(this.querySelector('img').src)">
+                <div class="px-5 py-3 bg-slate-50 border-b border-slate-100">
+                    <span class="text-sm font-medium text-slate-700">图 3 · DeepSeek加豆包翻译对比其二</span>
+                </div>
+                <div class="p-2">
+                    <img src="QQ20260620-193142.png" 
+                         alt="DeepSeek加豆包翻译对比其二" 
+                         class="w-full h-auto rounded-lg">
+                </div>
+            </div>
+
+            <!-- 图片 4 -->
+            <div class="card-hover bg-white rounded-xl overflow-hidden shadow-lg cursor-pointer" onclick="openLightbox(this.querySelector('img').src)">
+                <div class="px-5 py-3 bg-slate-50 border-b border-slate-100">
+                    <span class="text-sm font-medium text-slate-700">图 4 · DeepSeek加豆包翻译对比其三</span>
+                </div>
+                <div class="p-2">
+                    <img src="QQ20260620-193204.png" 
+                         alt="DeepSeek加豆包翻译对比其三" 
+                         class="w-full h-auto rounded-lg">
+                </div>
+            </div>
+        </div>
+
+        <!-- 说明文字 -->
+        <div class="mt-12 bg-white rounded-xl p-6 shadow-md">
+            <h2 class="text-lg font-semibold text-slate-800 mb-3">对比说明</h2>
+            <ul class="text-slate-600 space-y-2 text-sm">
+                <li>• 原文：<code class="bg-slate-100 px-2 py-0.5 rounded text-pink-600">最新AI搭載モデル！</code></li>
+                <li>• 涵盖平台：DeepSeek、豆包、Kimi 三大 AI 助手的翻译结果</li>
+                <li>• 点击任意图片可放大查看细节</li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- 灯箱 -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" src="" alt="放大查看">
+    </div>
+
+    <script>
+        function openLightbox(src) {
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ESC 键关闭
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+    </script>
+</body>
+</html>
