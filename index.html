@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>个人主页</title>
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
     <!-- Font Awesome -->
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- AOS 动画库 -->
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js">
+    </script>
+
     <script>
         tailwind.config = {
             theme: {
@@ -25,33 +27,97 @@
         }
     </script>
     <style>
-        /* 背景切换过渡  没什么值得看的，框架都是ai建的 */
-        body {transition: background-image 1s ease-in-out;}
-        /* 桌面端/移动端背景图（替换为你的实际背景图路径） */
-        .desktop-bg{background-image:url('background/-ivealive.png');}
-        .mobile-bg{background-image:url('background/03.png');}
+        /* 背景切换过渡 */
+        body {
+            transition: background-image 1s ease-in-out;
+        }
+        /* 桌面端/移动端背景图 */
+        .desktop-bg {
+            background-image: url('background/-ivealive.png');
+        }
+        .mobile-bg {
+            background-image: url('background/03.png');
+        }
         /* 卡片悬浮效果 */
-        .profile-card{transition:all 0.3s ease;}
-        .profile-card:hover{transform:translateY(-5px);box-shadow:0 20px 25px -5px rgba(0,0,0,0.2);}
+        .profile-card {
+            transition: all 0.3s ease;
+        }
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+        }
         /* 背景渐变遮罩 */
-        .bg-gradient-overlay{background:linear-gradient(to bottom,rgba(0,0,0,0.2),rgba(0,0,0,0.7));}
-        /* 头像图片适配：防止拉伸，居中显示 */
+        .bg-gradient-overlay {
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.7));
+        }
+        /* 头像图片适配 */
         .avatar-img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* 图片铺满容器且不变形 */
-            object-position: center; /* 图片居中 */
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* ----- 弹窗文章阅读样式 ----- */
+        .modal-article-content p {
+            font-size: 16px;
+            line-height: 1.9;
+            margin-bottom: 1.2rem;
+            color: #2d3748;
+            text-align: justify;
+            letter-spacing: 0.01em;
+        }
+        .modal-article-content p:last-child {
+            margin-bottom: 0;
+        }
+        /* 弹窗滚动条美化 */
+        .modal-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .modal-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .modal-scrollbar::-webkit-scrollbar-thumb {
+            background: #c1c7cd;
+            border-radius: 4px;
+        }
+        .modal-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a0a7ae;
+        }
+        /* 弹窗打开时禁止背景滚动 */
+        body.no-scroll {
+            overflow: hidden;
+        }
+        /* 按钮点击波纹 */
+        .ripple-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 移动端适配增强：弹窗内边距和字体微调 */
+        @media (max-width: 640px) {
+            .modal-article-content p {
+                font-size: 15px;
+                line-height: 1.8;
+            }
+            #articleModal .pointer-events-auto {
+                max-width: 100%;
+                margin: 0 8px;
+                border-radius: 16px;
+            }
         }
     </style>
 </head>
 <body class="bg-cover bg-center bg-fixed min-h-screen flex items-center justify-center p-4">
+
+    <!-- ====== 背景遮罩 ====== -->
     <div class="fixed inset-0 bg-gradient-overlay z-0"></div>
 
-    <!-- 侧边栏 -->
+    <!-- ====== 侧边栏 ====== -->
     <div id="sidebar" class="fixed top-0 left-0 h-full w-64 bg-white/90 backdrop-blur shadow-lg -translate-x-full transition-all duration-300 z-40">
         <div class="p-6">
             <div class="flex items-center justify-between mb-8">
-                <!-- 侧边栏头像：替换为图片（相对路径 picture/avatar.png） -->
                 <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-primary">
                     <img src="avatar/avatar.jpg" alt="侧边栏头像" class="avatar-img">
                 </div>
@@ -68,94 +134,243 @@
             </nav>
         </div>
     </div>
-    
+
     <!-- 侧边栏遮罩 -->
     <div id="sidebarOverlay" class="fixed inset-0 bg-black/50 z-30 hidden"></div>
-    
+
     <!-- 菜单按钮 -->
     <button id="menuBtn" class="fixed top-4 left-4 z-50 w-12 h-12 rounded-full bg-white/90 shadow-lg flex items-center justify-center text-gray-700">
         <i class="fa fa-bars text-xl"></i>
     </button>
 
-    <!-- 主卡片 -->
+    <!-- ====== 主卡片 ====== -->
     <div class="relative z-10 w-full max-w-md">
         <div class="profile-card bg-white/90 backdrop-blur rounded-2xl shadow-xl overflow-hidden pt-20" data-aos="fade-up">
-            <!-- 主页面头像：替换为图片（相对路径 picture/avatar.png） -->
+
+            <!-- 头像 -->
             <div class="relative flex justify-center">
                 <div class="w-32 h-32 rounded-full border-4 border-white shadow-lg overflow-hidden">
                     <img src="avatar/avatar.jpg" alt="个人头像" class="avatar-img">
                 </div>
             </div>
 
-            <div class="pt-8 pb-8 px-6 text-center">
+            <div class="pt-8 pb-6 px-6 text-center">
                 <h1 class="text-3xl font-bold text-dark mb-2">蔚蓝侠客</h1>
                 <p class="text-lg text-gray-600 mb-4">蔚蓝档案国服开服玩家 我的世界玩家</p>
                 <div class="w-20 h-1 bg-primary mx-auto my-4 rounded-full"></div>
                 <p class="text-gray-700">
-                    喜欢做我自己想做的事的鸽子
+                    喜欢做我自己想做的事的鸽子<br>
                     有时候总有新想法冒出，但多数没落实
                 </p>
+
+                <!-- 手动打开文章的按钮（始终可用） -->
+                <div class="mt-6">
+                    <button id="readArticleBtn"
+                    class="ripple-btn inline-flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-full hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg text-sm font-medium">
+                    <i class="fa fa-book"></i>
+                    阅读文章：守护热爱的底色
+                </button>
             </div>
         </div>
     </div>
+</div>
 
-    <script>
-        // 1. 初始化AOS动画（允许多次触发）
-        AOS.init({
-            once: false,        // 关闭“只触发一次”，支持窗口切换后重放
-            duration: 800,      // 动画时长
-            easing: 'ease-in-out'
+<!-- ============================================================ -->
+<!-- ====== 文章弹窗（模态框） ====== -->
+<!-- ============================================================ -->
+<div id="articleModal" class="fixed inset-0 z-[60] hidden">
+    <!-- 遮罩层（点击关闭） -->
+    <div id="modalOverlay" class="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity"></div>
+
+    <!-- 弹窗容器 -->
+    <div class="relative h-full w-full flex items-center justify-center p-4 md:p-6 pointer-events-none">
+        <div class="pointer-events-auto bg-white/95 backdrop-blur rounded-2xl shadow-2xl max-w-2xl w-full max-h-[92vh] flex flex-col overflow-hidden border border-white/20">
+
+            <!-- 标题栏 -->
+            <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200/80 flex-shrink-0">
+                <h2 class="text-xl font-bold text-dark flex items-center gap-2">
+                    <i class="fa fa-feather text-primary text-lg"></i>
+                    守护热爱的底色【由ai润色修改】
+                </h2>
+                <button id="closeArticleBtn" class="text-gray-400 hover:text-gray-700 text-2xl transition-colors w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+
+            <!-- 文章内容（滚动） -->
+            <div class="modal-scrollbar px-6 py-6 overflow-y-auto flex-1">
+                <div class="modal-article-content max-w-none">
+
+                    <p>《蔚蓝档案》以老师与学生彼此救赎的温情叙事为内核，凭借鲜活立体的角色塑造凝聚了海量爱好者。游戏剧情的章节式留白与广阔的世界观空间，为二次创作提供了丰沃的土壤，由此催生了图文、手书、MMD、安科等形态各异的二创内容，构筑起体量庞大的同人社区。在这片社区中，仅有少数创作者靠零星赞助维持创作，绝大多数人从未开启收益渠道，纯粹以热爱为动力产出内容 —— 这便是圈内常说的 "为爱发电"。</p>
+
+                    <p>然而，随着社群规模不断扩张，针对无偿二创作者的无端苛责、立场审判与恶意攻击正愈演愈烈，无数创作者深受其害。这类行为正如《原神》中多托雷侵蚀世界树一般，不从单篇作品入手，而是直刺二创生态的底层根基，动摇整个社区的活力与包容度。为爱发电的创作者是蔚蓝档案二创圈的核心支柱，无端的攻击与内耗只会逐步瓦解这份支撑。因此，坚决抵制针对无偿创作者的恶意攻击，共同守护良性的创作土壤，是每一位爱好者的共同责任。</p>
+
+                    <p>官方内容的天然留白，是二创生态生长的原点。爱好者们以自身对角色与剧情的理解进行创作，填补了版本更新的空窗期，拓展了世界观的边界，也让 "老师" 的身份共鸣在一次次二次表达中不断强化。而支撑起这片创作繁荣的，不仅有台前的内容创作者，更有幕后的上游建设者：开发二创工具的团队、整理拆分立绘素材的社团、无偿汉化资源的字幕组、搭建数据平台的维护者。他们是二创生态的 "隐形地基"，用无偿的付出拉低了创作门槛，让每一份普通的热爱都有落地的可能。</p>
+
+                    <p>令人痛心的是，这份无偿的付出非但没有得到应有的尊重，反而成了恶意攻击的靶子，二创上游的基建正接连遭受冲击。开发 Azure Archive 二创工具的月狐屋团队，长期免费提供角色骨骼拆分、立绘分层等核心功能，却被无端造谣 "靠素材牟利、垄断二创资源"，更持续遭受私信辱骂、人肉开盒与跨平台网暴，最终不堪精神重负宣布无限期停更。作为其核心素材合作方，美代的雪国出版社也被裹挟进风波：部分攻击者连带苛责其立绘资源 "拆分不精细""更新慢""有瑕疵"，用商业素材库的标准要求无偿产出；派系对立中，出版社因 "中立提供全角色素材" 被极端群体扣上 "资敌" 的帽子，遭遇定向差评与骚扰；Azure Archive 停更后，大量普通用户又涌入其社群催更索材，将素材供给视作理所当然，进一步消耗着维护者的精力。除此之外，星時的 momotoki 工具项目宣告停更，逐梦星辰汉化组永久终止视觉素材汉化工作，海外 DoliconBA 素材工具站因长期恶意挑错停止运营，NijiNeko 解包风波更是让全圈无偿素材分享者集体收缩、噤若寒蝉。</p>
+
+                    <p>上游基建的崩塌从来不是孤立事件，它的负面影响会像世界树被污染后的地脉紊乱一样，逐级传导至生态的每一个角落。多托雷为满足一己私欲入侵世界树核心，动摇的是整个提瓦特的秩序；部分攻击者为宣泄情绪、维护派系立场，对工具与素材开发者肆意攻击，摧毁的是整个二创圈的创作根基。当免费工具停更、公开素材下架，最先受影响的是下游的普通创作者：新人无素材可用，难以迈出创作的第一步；成熟创作者失去便利工具，创作成本大幅提升。最终，内容产出减少、创作活力衰退，所有观众与玩家都将无新内容可看 —— 没有人能在生态的崩坏中独善其身，少数人的情绪宣泄，最终要由全体爱好者共同买单。</p>
+
+                    <p>更值得深思的是，生态修复的代价，永远最先由默默付出的建设者承担。正如为净化世界树的禁忌知识，大慈树王选择以彻底抹除自身存在为代价，换得提瓦特的安宁；而二创圈里的无偿建设者们，也往往在恶意的裹挟中，以停更、退圈的方式被动止损。小吉祥草王纳西妲 "烧毁世界树" 的极端止损方式，恰如社区风气崩坏后，管理者与创作者要付出数倍的精力去修复秩序，可那些被迫退场的创作者、那些永久消失的素材与工具，却再也无法复原。更残酷的是，当这些基建悄然消亡，后来的新玩家甚至不会知道曾有这样一群人，曾为这个社区提供过如此多的便利；他们只会默认创作本就该有这么高的门槛，却无从知晓这份便利曾被怎样的恶意摧毁。公共财富的流失总是无声无息，其根源却少有人追溯。</p>
+
+                    <p>为爱发电的创作者，是蔚蓝档案二创圈最珍贵的财富；无端的攻击与苛责，是对这份热爱最直接的消耗与伤害。基沃托斯的温暖从不只存在于游戏剧情里，更藏在每一位爱好者互相尊重、彼此包容的社区氛围中。守护热爱的底色，不需要每个人都成为创作者，只需要我们对每一份无偿付出多一点感恩，对观点的分歧多一点包容，对无端的恶意多一分抵制。从一句善意的评论、一次包容的理解做起，我们共同守护的，不只是二创生态的活力，更是这份因蔚蓝档案而生的、纯粹的热爱。</p>
+
+                    <p>寒冬终会散去，阴霾终将消散。愿每一份热爱都能被温柔以待，愿这片社区能永远保有温暖与生机。</p>
+
+                </div>
+            </div>
+
+            <!-- 底部关闭按钮 -->
+            <div class="flex items-center justify-end px-5 py-3 border-t border-gray-200/80 flex-shrink-0 bg-white/50">
+                <button id="closeArticleBtn2" class="text-sm text-gray-500 hover:text-gray-700 transition-colors flex items-center gap-1">
+                    <i class="fa fa-times-circle"></i>
+                    关闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ====== JavaScript ====== -->
+<script>
+    // ---------- AOS 初始化 ----------
+    AOS.init({
+        once: false,
+        duration: 800,
+        easing: 'ease-in-out'
+    });
+
+    // ---------- 背景切换 ----------
+    function setBackground() {
+        const body = document.body;
+        body.classList.remove('desktop-bg', 'mobile-bg');
+        if (window.innerWidth >= 768) {
+            body.classList.add('desktop-bg');
+        } else {
+            body.classList.add('mobile-bg');
+        }
+        AOS.refresh();
+    }
+    setBackground();
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            setBackground();
+            AOS.refreshHard();
+        }, 100);
+    });
+
+    // ---------- 侧边栏 ----------
+    const sidebar = document.getElementById('sidebar'),
+        overlay = document.getElementById('sidebarOverlay'),
+        menuBtn = document.getElementById('menuBtn'),
+        closeBtn = document.getElementById('closeSidebar'),
+        links = document.querySelectorAll('.sidebar-link');
+
+    function openSide() {
+        sidebar.classList.remove('-translate-x-full');
+        overlay.classList.remove('hidden');
+        menuBtn.classList.add('hidden');
+    }
+
+    function closeSide() {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+        menuBtn.classList.remove('hidden');
+    }
+    menuBtn.onclick = openSide;
+    closeBtn.onclick = closeSide;
+    overlay.onclick = closeSide;
+    links.forEach(item => item.onclick = closeSide);
+    document.onkeydown = e => e.key === 'Escape' && closeSide();
+
+    // ================================================================
+    // ---------- 文章弹窗交互（含自动弹出 & 关闭标记） ----------
+    // ================================================================
+    const modal = document.getElementById('articleModal');
+    const overlayModal = document.getElementById('modalOverlay');
+    const openBtn = document.getElementById('readArticleBtn');
+    const closeBtn1 = document.getElementById('closeArticleBtn');
+    const closeBtn2 = document.getElementById('closeArticleBtn2');
+
+    // 存储 key
+    const STORAGE_KEY = 'ba_article_read';
+
+    // 打开弹窗
+    function openModal() {
+        modal.classList.remove('hidden');
+        document.body.classList.add('no-scroll');
+        modal.style.opacity = '0';
+        requestAnimationFrame(() => {
+            modal.style.transition = 'opacity 0.25s ease';
+            modal.style.opacity = '1';
         });
+    }
 
-        // 2. 修复背景切换逻辑（避免类叠加）
-        function setBackground(){
-            const body = document.body;
-            // 先移除所有背景类，再添加目标类
-            body.classList.remove('desktop-bg', 'mobile-bg');
-            if (window.innerWidth >= 768) {
-                body.classList.add('desktop-bg');
-            } else {
-                body.classList.add('mobile-bg');
-            }
-            // 刷新动画状态
-            AOS.refresh();
+    // 关闭弹窗（同时存储标记，确保不再自动弹出）
+    function closeModal() {
+        // 设置 localStorage，表示用户已看过文章
+        localStorage.setItem(STORAGE_KEY, 'true');
+
+        modal.style.opacity = '0';
+        setTimeout(() => {
+            modal.classList.add('hidden');
+            document.body.classList.remove('no-scroll');
+            modal.style.transition = 'none';
+            modal.style.opacity = '';
+        }, 250);
+    }
+
+    // 事件绑定（手动按钮）
+    openBtn.addEventListener('click', openModal);
+
+    // 关闭事件
+    closeBtn1.addEventListener('click', closeModal);
+    closeBtn2.addEventListener('click', closeModal);
+    overlayModal.addEventListener('click', closeModal);
+
+    // ESC 关闭
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            closeModal();
         }
+    });
 
-        // 初始加载背景
-        setBackground();
-
-        // 3. 窗口resize防抖+动画刷新
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                setBackground();
-                AOS.refreshHard(); // 强制刷新动画（解决切回电脑端不播放问题）
-            }, 100);
+    // 防止点击弹窗内容关闭（事件冒泡由遮罩处理）
+    const modalContent = document.querySelector('#articleModal .pointer-events-auto');
+    if (modalContent) {
+        modalContent.addEventListener('click', function(e) {
+            e.stopPropagation();
         });
+    }
 
-        // 4. 侧边栏交互逻辑
-        const sidebar = document.getElementById('sidebar'),
-              overlay = document.getElementById('sidebarOverlay'),
-              menuBtn = document.getElementById('menuBtn'),
-              closeBtn = document.getElementById('closeSidebar'),
-              links = document.querySelectorAll('.sidebar-link');
+    // ================================================================
+    // ---------- 自动弹出逻辑（仅当未关闭过） ----------
+    // ================================================================
+    // 页面加载完成后检查 localStorage，若未标记则自动弹出
+    // 使用 DOMContentLoaded 确保 DOM 已就绪，但因为我们脚本在底部，也可以直接执行
+    // 为保险，用 setTimeout 延迟执行，给渲染留一点时间
+    function autoOpenModal() {
+        if (!localStorage.getItem(STORAGE_KEY)) {
+            // 延迟 600ms 让页面过渡平滑
+            setTimeout(() => {
+                openModal();
+            }, 600);
+        }
+    }
 
-        function openSide(){
-            sidebar.classList.remove('-translate-x-full');
-            overlay.classList.remove('hidden');
-            menuBtn.classList.add('hidden');
-        }
-        function closeSide(){
-            sidebar.classList.add('-translate-x-full');
-            overlay.classList.add('hidden');
-            menuBtn.classList.remove('hidden');
-        }
-        menuBtn.onclick = openSide;
-        closeBtn.onclick = closeSide;
-        overlay.onclick = closeSide;
-        links.forEach(item => item.onclick = closeSide);
-        document.onkeydown = e => e.key === 'Escape' && closeSide();
-    </script>
+    // 如果页面已加载完成则直接执行，否则监听加载事件
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        autoOpenModal();
+    } else {
+        document.addEventListener('DOMContentLoaded', autoOpenModal);
+    }
+
+    console.log('✅ 文章弹窗已加载 — 守护热爱的底色（自动弹出 + 关闭记忆）');
+</script>
+
 </body>
 </html>
